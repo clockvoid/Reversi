@@ -1,14 +1,14 @@
 {
-  "name": "othello",
+  "name": "reversi",
   "version": "1.0.0",
-  "description": "othello game",
+  "description": "reversi",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch"
   },
   "keywords": [
-    "othello"
+    "reversi"
   ],
   "author": "clock",
   "license": "ISC",
