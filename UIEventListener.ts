@@ -58,3 +58,16 @@ export class TouchEventListener implements EventListener {
     }
 
 }
+
+export class ButtonEventListener implements EventListener {
+    _event: string;
+    _field: Field.Field;
+
+    eventname: string;
+
+    constructor() {
+        this._event = "onclick";
+    }
+
+    callback(event: any): any;
+}
