@@ -6,10 +6,12 @@ export class View {
     _monitor_size: number;
     _start_angle: number = 0;
     _end_angle: number = 2 * Math.PI;
+    _skip_button: any;
 
     constructor() {
         this._canvas = document.getElementById("canvas");
         this._monitor_size = this._canvas.width;
+        this._skip_button = document.getElementById("skip");
     }
 
     addCanvasEventListener: any = (listener: Event.EventListener) => {
@@ -54,6 +56,10 @@ export class View {
                 }
             }
         }
+    }
+
+    seeDialog: any = (body: string) => {
+        alert(body);
     }
 
 }
