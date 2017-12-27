@@ -89,6 +89,7 @@ export class Field {
                 this._view.seeDialog((this._turn == 0 ? "black" : "white") + " wins!");
             }
             this._turn = 1 - this._turn;
+            this._view.viewTurn(this._turn);
         }
         this._view.drawField(this._field, this._size);
     }

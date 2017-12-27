@@ -3,7 +3,7 @@ import View = require("./view");
 import Event = require("./UIEventListener");
 
 window.onload = () => {
-    let size = 10;
+    let size = 8;
     let view = new View.View();
     let field = new Field.Field(size, view);
     view.drawField(field.field, size);

@@ -6,11 +6,13 @@ export class View {
     private _start_angle: number = 0;
     private _end_angle: number = 2 * Math.PI;
     private _skip_button: HTMLButtonElement;
+    private _turn_monitor: HTMLFormElement;
 
     constructor() {
         this._canvas = document.getElementById("canvas") as HTMLCanvasElement;
         this._monitor_size = this._canvas.width;
         this._skip_button = document.getElementById("skip") as HTMLButtonElement;
+        this._turn_monitor = document.getElementById("turn") as HTMLFormElement;
     }
 
     addCanvasEventListener: (listener: Event.EventListener) => void = (listener: Event.EventListener) => {
@@ -59,6 +61,10 @@ export class View {
 
     seeDialog: (body: string) => void = (body: string) => {
         alert(body);
+    }
+
+    viewTurn: (turn: number) => void = (turn: number) => {
+        this._turn_monitor.innerHTML = "Turn: " + (turn == 0 ? "黒" : "白");
     }
 
 }
