@@ -1,10 +1,10 @@
-import View = require("./view");
+import view = require("./view");
 
 export class Field {
-    _field: Array<Array<number>>;
-    _size: number;
-    _view: View.View;
-    _turn: number;
+    private _field: Array<Array<number>>;
+    private _size: number;
+    private _view: view.View;
+    private _turn: number;
 
     get size(): number {
         return this._size;
@@ -14,26 +14,27 @@ export class Field {
         return this._field;
     }
 
-    constructor(size: number, view: View.View) {
-        this._size = size;
+    constructor(arg1: number, arg2: view.View) {
+        this._size = arg1;
         this._turn = 0;
-        var body = new Array(size);
-        for (var i: number = 0; i < size; i++) {
-            var column: Array<number> = new Array(size);
-            for (var j: number = 0; j < size; j++) {
+        var body = new Array(arg1);
+        for (var i: number = 0; i < arg1; i++) {
+            var column: Array<number> = new Array(arg1);
+            for (var j: number = 0; j < arg1; j++) {
                 column[j] = 0; //(j + i) % 2 == 0 ? 1 : 2;
             }
             body[i] = column;
         }
         this._field = body;
-        this._view = view;
+        this._view = arg2;
     }
 
-    _decision: any = (cell: number, range: Array<Array<number>>) => {
+    _decision: (cell: number, range: Array<Array<number>>) => number = (cell: number, range: Array<Array<number>>) => {
         var f1 = 0;
         var f2 = 0;
         var f3 = 0;
 
+        console.log(JSON.stringify(range));
         for (var i = 0; i < 5; i++) {
             for (var j = 0; j < 5; j++) {
                 if (i == 0) {
@@ -51,7 +52,7 @@ export class Field {
         return f1 || f2 || f3;
     }
 
-    decision: any = () => {
+    decision: () => number = () => {
         var range: Array<Array<number>> = new Array();
 
         for (var i = 0; i < 5; i++) {
@@ -80,15 +81,15 @@ export class Field {
         return 0;
     }
 
-    putStone: any = (vec: number[]) => {
+    putStone: (vec: number[]) => void = (vec: number[]) => {
         if (this._field[vec[0]][vec[1]] == 0) {
             this._field[vec[0]][vec[1]] = this._turn == 1 ?  2 : 1;
             if (this.decision() == 1) {
-                this._view.drawField(this._field, 8);
+                this._view.drawField(this._field, this._size);
                 this._view.seeDialog((this._turn == 0 ? "black" : "white") + " wins!");
             }
             this._turn = 1 - this._turn;
         }
-        this._view.drawField(this._field, 8);
+        this._view.drawField(this._field, this._size);
     }
 }
