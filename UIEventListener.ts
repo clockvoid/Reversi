@@ -67,3 +67,25 @@ export class TouchEventListener implements EventListener {
     }
 
 }
+
+export class ButtonEventListener implements EventListener {
+    private _event: string;
+    private _field: field.Field;
+    private _button: HTMLButtonElement;
+
+    get eventname(): string {
+        return this._event;
+    }
+
+    get field(): field.Field {
+        return this._field;
+    }
+
+    constructor(arg1: string) {
+        this._event = "onclick";
+        this._button = document.getElementById(arg1) as HTMLButtonElement;
+    }
+
+    callback: (event: Event) => void = (event: Event) => {
+    }
+}
