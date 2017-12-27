@@ -143,6 +143,7 @@ export class Field {
             this._field = this._new_field;
             this._field[vec[0]][vec[1]] = this._turn == 1 ?  2 : 1;
             this._turn = 1 - this._turn;
+            this._view.viewTurn(this._turn);
             this.makeNewPutableZone();
             this._view.drawField(this._field, this._size);
         } else {
