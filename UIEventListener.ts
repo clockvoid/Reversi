@@ -1,31 +1,35 @@
-import Field = require("./field");
+import field = require("./field");
 
 export interface EventListener {
-    _event: string;
-    _field: Field.Field;
-
     eventname: string;
+    field: field.Field;
 
-    callback(event: any): any;
+    callback: (event: Event) => void;
 }
 
 export class UIEventListener implements EventListener {
-    _event: string;
-    _field_size: number;
-    _canvas_size: number;
-    _field: Field.Field;
-    eventname: string;
+    private _event: string;
+    private _field_size: number;
+    private _canvas_size: number;
+    private _field: field.Field;
     
-    constructor(arg0: number, arg1: number, arg2: Field.Field) {
+    get eventname(): string {
+        return this._event;
+    }
+
+    get field(): field.Field {
+        return this._field;
+    }
+
+    constructor(arg0: number, arg1: number, arg2: field.Field) {
         this._field_size = arg0;
         this._canvas_size = arg1;
         this._event = "click";
-        this.eventname = this._event;
         this._field = arg2;
     }
 
-    callback: any = (event: any) => {
-        let rect = event.target.getBoundingClientRect();
+    callback: (event: MouseEvent) => void = (event: MouseEvent) => {
+        let rect = (event.target as Element).getBoundingClientRect();
         let x: number = event.clientX - rect.left;
         let y: number = event.clientY - rect.top;
         this._field.putStone([Math.floor(x / (this._canvas_size / this._field_size)), Math.floor(y / (this._canvas_size / this._field_size))]);
@@ -34,24 +38,29 @@ export class UIEventListener implements EventListener {
 }
 
 export class TouchEventListener implements EventListener {
-    _event: string;
-    _field_size: number;
-    _canvas_size: number;
-    _field: Field.Field;
+    private _event: string;
+    private _field_size: number;
+    private _canvas_size: number;
+    private _field: field.Field;
 
-    eventname: string;
+    get eventname(): string {
+        return this._event;
+    }
 
-    constructor(arg0: number, arg1: number, arg2: Field.Field) {
+    get field(): field.Field {
+        return this._field;
+    }
+
+    constructor(arg0: number, arg1: number, arg2: field.Field) {
         this._field_size = arg0;
         this._canvas_size = arg1;
         this._event = "touchstart";
-        this.eventname = this._event;
         this._field = arg2;
     }
 
-    callback: any = (event: any) => {
+    callback: (event: TouchEvent) => void = (event: TouchEvent) => {
         event.preventDefault();
-        let rect = event.target.getBoundingClientRect();
+        let rect = (event.target as Element).getBoundingClientRect();
         let x: number = event.changedTouches[0].clientX - rect.left;
         let y: number = event.changedTouches[0].clientY - rect.top;
         this._field.putStone([Math.floor(x / (this._canvas_size / this._field_size)), Math.floor(y / (this._canvas_size / this._field_size))]);
@@ -60,14 +69,23 @@ export class TouchEventListener implements EventListener {
 }
 
 export class ButtonEventListener implements EventListener {
-    _event: string;
-    _field: Field.Field;
+    private _event: string;
+    private _field: field.Field;
+    private _button: HTMLButtonElement;
 
-    eventname: string;
-
-    constructor() {
-        this._event = "onclick";
+    get eventname(): string {
+        return this._event;
     }
 
-    callback(event: any): any;
+    get field(): field.Field {
+        return this._field;
+    }
+
+    constructor(arg1: string) {
+        this._event = "onclick";
+        this._button = document.getElementById(arg1) as HTMLButtonElement;
+    }
+
+    callback: (event: Event) => void = (event: Event) => {
+    }
 }

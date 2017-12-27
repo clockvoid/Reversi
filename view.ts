@@ -1,22 +1,23 @@
 import Event = require("./UIEventListener");
 
 export class View {
-    _canvas: any;
-    _monitor: any;
-    _monitor_size: number;
-    _start_angle: number = 0;
-    _end_angle: number = 2 * Math.PI;
+    private _canvas: HTMLCanvasElement;
+    private _monitor_size: number;
+    private _start_angle: number = 0;
+    private _end_angle: number = 2 * Math.PI;
+    private _skip_button: HTMLButtonElement;
 
     constructor() {
-        this._canvas = document.getElementById("canvas");
+        this._canvas = document.getElementById("canvas") as HTMLCanvasElement;
         this._monitor_size = this._canvas.width;
+        this._skip_button = document.getElementById("skip") as HTMLButtonElement;
     }
 
-    addCanvasEventListener: any = (listener: Event.EventListener) => {
+    addCanvasEventListener: (listener: Event.EventListener) => void = (listener: Event.EventListener) => {
         this._canvas.addEventListener(listener.eventname, listener.callback);
     }
 
-    draw: any = () => {
+    draw: () => void = () => {
         let ctx = this._canvas.getContext('2d');
         ctx.beginPath();
         ctx.moveTo(20, 20);
@@ -27,7 +28,7 @@ export class View {
         ctx.stroke();
     }
 
-    drawField: any = (field: Array<Array<number>>, size: number) => {
+    drawField: (field: Array<Array<number>>, sizse: number) => void = (field: Array<Array<number>>, size: number) => {
         let radius = this._monitor_size / size / 2;
         let ctx = this._canvas.getContext('2d');
         ctx.beginPath();
@@ -54,6 +55,10 @@ export class View {
                 }
             }
         }
+    }
+
+    seeDialog: (body: string) => void = (body: string) => {
+        alert(body);
     }
 
 }

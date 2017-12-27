@@ -1,4 +1,4 @@
-import View = require("./view");
+import view = require("./view");
 
 class Vector {
     x: number;
@@ -11,14 +11,14 @@ class Vector {
 }
 
 export class Field {
-    _field: Array<Array<number>>;
-    _new_field: Array<Array<number>>;
-    _size: number;
-    _view: View.View;
-    _turn: number;
-    _put_able_zone: Array<Array<number>>;
-    ai: number[] = [-1, -1, -1, 0, 1, 1, 1, 0];
-    aj: number[] = [-1, 0, 1, -1, -1, 0, 1, 1];
+    private _field: Array<Array<number>>;
+    private _new_field: Array<Array<number>>;
+    private _size: number;
+    private _view: view.View;
+    private _turn: number;
+    private _put_able_zone: Array<Array<number>>;
+    private ai: number[] = [-1, -1, -1, 0, 1, 1, 1, 0];
+    private aj: number[] = [-1, 0, 1, -1, -1, 0, 1, 1];
 
     get size(): number {
         return this._size;
@@ -28,13 +28,13 @@ export class Field {
         return this._field;
     }
 
-    constructor(size: number, view: View.View) {
-        this._size = size;
+    constructor(arg1: number, arg2: view.View) {
+        this._size = arg1;
         this._turn = 0;
-        var body = new Array(size);
-        for (var i: number = 0; i < size; i++) {
-            var column: Array<number> = new Array(size);
-            for (var j: number = 0; j < size; j++) {
+        var body: Array<Array<number>> = new Array();
+        for (var i: number = 0; i < arg1; i++) {
+            var column: Array<number> = new Array(arg1);
+            for (var j: number = 0; j < arg1; j++) {
                 if ((i == 3 && j == 3) || (i == 4 && j == 4)) {
                     column[j] = 2;
                 } else if ((i == 4 && j == 3) || (i == 3 && j == 4)) {
@@ -46,7 +46,7 @@ export class Field {
             body[i] = column;
         }
         this._field = body;
-        this._view = view;
+        this._view = arg2;
         this.makeNewPutableZone();
     }
 
