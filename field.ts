@@ -50,7 +50,7 @@ export class Field {
         this.makeNewPutableZone();
     }
 
-    doubleArrayCopy: any = (source: Array<Array<number>>) => {
+    doubleArrayCopy: (sourve: Array<Array<number>>) => Array<Array<number>> = (source: Array<Array<number>>) => {
         var body: Array<Array<number>> = new Array(source.length);
         for (var i: number = 0; i < source.length; i++) {
             var column: Array<number> = new Array(source[i].length);
@@ -62,7 +62,7 @@ export class Field {
         return body;
     }
 
-    doubleArrayEquals: any = (target: Array<Array<number>>, source: Array<Array<number>>) => {
+    doubleArrayEquals: (target: Array<Array<number>>, source: Array<Array<number>>) => boolean = (target: Array<Array<number>>, source: Array<Array<number>>) => {
         for (var i: number = 0; i < source.length; i++) {
             for (var j: number = 0; j < source[i].length; j++) {
                 if (target[i][j] != source[i][j]) {
@@ -73,7 +73,7 @@ export class Field {
         return true;
     }
 
-    makeNewPutableZone: any = () => {
+    makeNewPutableZone: () => void = () => {
         this._put_able_zone = new Array();
         for (var i: number = 0; i < this._size; i++) {
             for (var j: number = 0; j < this._size; j++) {
@@ -86,7 +86,7 @@ export class Field {
         }
     }
 
-    check: any = (x: number, y: number, dx: number, dy: number) =>  {
+    check: (x: number, y: number, dx: number, dy: number) => number = (x: number, y: number, dx: number, dy: number) =>  {
         var returnValue: number = 0;
         if (x + dx >= 0 && x + dx < this._size && y + dy >= 0 && y + dy < this._size) {
             if (this._field[x + dx][y + dy] == (this._turn == 0 ? 2 : 1)) {
@@ -105,21 +105,10 @@ export class Field {
         }
     }
 
-    checkReverce: any = (vec: number[]) => {
+    checkReverce: (vec: number[]) => number = (vec: number[]) => {
         var returnValue: number = 0;
 
         for (var n: number = 0; n < 8; n++) {
-            /*for (var i: number = 0; i < this._size; i++) {
-                for (var j: number = 0; j < this._size; j++) {
-                    let x = vec[0] + i * this.ai[n];
-                    let y = vec[1] + j * this.aj[n];
-                    if ((0 <= x && x < this._size) && (0 <= y && y < this._size) && (x - vec[0] + this.ai[n] != 0 && this.ai[n] != 0) && (y - vec[1] + this.aj[n] != 0 && this.aj[n] != 0)) {
-                        if (this._field[vec[0] + i * this.ai[n]][vec[1] + j * this.aj[n]] == (this._turn == 0 ? 1 : 2)) {
-                            returnValue = 1;
-                        }
-                    }
-                }
-            }*/
             let flag: number = this.check(vec[0], vec[1], this.ai[n], this.aj[n]);
             returnValue = returnValue < flag ? flag : returnValue;
         }
@@ -127,17 +116,19 @@ export class Field {
         return returnValue;
     }
 
-    searchNewPosition: any = (vec: number[]) => {
-        var returnValue = 0;
+    searchNewPosition: (vec: number[]) => number = (vec: number[]) => {
+        var returnValue: number = 0;
+
         for (var i = 0; i < this._put_able_zone.length; i++) {
             if (vec[0] == this._put_able_zone[i][0] && vec[1] == this._put_able_zone[i][1]) {
                 returnValue = 1;
             }
         }
+
         return returnValue;
     }
 
-    putStone: any = (vec: number[]) => {
+    putStone: (vec: number[]) => void = (vec: number[]) => {
         if (this.searchNewPosition(vec) && this._field[vec[0]][vec[1]] == 0) {
             this.checkReverce(vec);
             this._field = this._new_field;
@@ -151,7 +142,10 @@ export class Field {
         }
     }
 
-    skip: any = () => {
+    skip: () => void = () => {
+        console.log("skipped");
         this._turn = 1 - this._turn;
+        this.makeNewPutableZone();
+        this._view.viewTurn(this._turn);
     }
 }

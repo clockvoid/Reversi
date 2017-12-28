@@ -8,6 +8,10 @@ export class View {
     private _skip_button: HTMLButtonElement;
     private _turn_monitor: HTMLFormElement;
 
+    public get canvasSize(): number {
+        return this._monitor_size;
+    }
+
     constructor() {
         this._canvas = document.getElementById("canvas") as HTMLCanvasElement;
         this._monitor_size = this._canvas.width;
@@ -17,6 +21,10 @@ export class View {
 
     addCanvasEventListener: (listener: Event.EventListener) => void = (listener: Event.EventListener) => {
         this._canvas.addEventListener(listener.eventname, listener.callback);
+    }
+
+    addButtonEventListener: (listener: Event.EventListener) => void = (listener: Event.EventListener) => {
+        this._skip_button.addEventListener(listener.eventname, listener.callback);
     }
 
     draw: () => void = () => {

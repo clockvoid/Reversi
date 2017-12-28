@@ -1,4 +1,5 @@
 import field = require("./field");
+import view = require("./view");
 
 export interface EventListener {
     eventname: string;
@@ -21,11 +22,11 @@ export class UIEventListener implements EventListener {
         return this._field;
     }
 
-    constructor(arg0: number, arg1: number, arg2: field.Field) {
-        this._field_size = arg0;
-        this._canvas_size = arg1;
+    constructor(arg0: field.Field, arg1: view.View) {
+        this._field_size = arg0.size;
+        this._canvas_size = arg1.canvasSize;
         this._event = "click";
-        this._field = arg2;
+        this._field = arg0;
     }
 
     callback: (event: MouseEvent) => void = (event: MouseEvent) => {
@@ -51,11 +52,11 @@ export class TouchEventListener implements EventListener {
         return this._field;
     }
 
-    constructor(arg0: number, arg1: number, arg2: field.Field) {
-        this._field_size = arg0;
-        this._canvas_size = arg1;
+    constructor(arg0: field.Field, arg1: view.View) {
+        this._field_size = arg0.size;
+        this._canvas_size = arg1.canvasSize;
         this._event = "touchstart";
-        this._field = arg2;
+        this._field = arg0;
     }
 
     callback: (event: TouchEvent) => void = (event: TouchEvent) => {
@@ -70,8 +71,8 @@ export class TouchEventListener implements EventListener {
 
 export class ButtonEventListener implements EventListener {
     private _event: string;
+    private _field_size: number;
     private _field: field.Field;
-    private _button: HTMLButtonElement;
 
     get eventname(): string {
         return this._event;
@@ -81,11 +82,13 @@ export class ButtonEventListener implements EventListener {
         return this._field;
     }
 
-    constructor(arg1: string) {
-        this._event = "onclick";
-        this._button = document.getElementById(arg1) as HTMLButtonElement;
+    constructor(arg0: field.Field) {
+        this._event = "click";
+        this._field_size = arg0.size;
+        this._field = arg0;
     }
 
     callback: (event: Event) => void = (event: Event) => {
+        this._field.skip();
     }
 }
