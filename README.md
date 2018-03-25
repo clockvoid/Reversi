@@ -12,9 +12,9 @@ git clone https://github.com/clockvoid/Reversi
 cd Reversi
 npm run-script build
 ```
-...And then, run in browser!
+...And then, run startOthello() function in your browser!
 
-The code well bundle to `./dit` and then, index.html will read it.
+The code well bundle to `./dist` and then, index.html will read it.
 
 ## Require
 * `npm`
