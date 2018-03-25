@@ -2,11 +2,7 @@ import Field = require("./field");
 import View = require("./view");
 import Event = require("./UIEventListener");
 
-<<<<<<< HEAD
 function startOthello() {
-=======
-window.onload = () => {
->>>>>>> d9e49f5... add: skip button implementation
     let size = 8;
     let view = new View.View();
     let field = new Field.Field(size, view);
