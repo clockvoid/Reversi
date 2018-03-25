@@ -2,7 +2,7 @@ import Field = require("./field");
 import View = require("./view");
 import Event = require("./UIEventListener");
 
-window.onload = () => {
+function startOthello() {
     let size = 8;
     let view = new View.View();
     let field = new Field.Field(size, view);
